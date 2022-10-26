@@ -4,7 +4,7 @@ import Login from '@/views/login/index.vue'
 import Layout from '@/views/layout/index.vue'
 import Dashboard from '@/views/dashboard/index.vue'
 import Article from '@/views/article/index.vue'
-
+import store from '@/store'
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,5 +22,16 @@ const routes = [
 const router = new VueRouter({
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  const token = store.state.user.token
+  if (token) {
+    next()
+  } else {
+    if (to.path === '/login') {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+})
 export default router

@@ -1,6 +1,6 @@
 /* 封装axios用于发送请求 */
 import axios from 'axios'
-
+import store from '@/store'
 // 创建一个新的 axios 实例
 const request = axios.create({
   baseURL: 'http://interview-api-t.itheima.net/',
@@ -11,6 +11,10 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
+    const token = store.state.user.token
+    if (token) {
+      config.headers.Authorization = `Bear ${token}`
+    }
     return config
   },
   function (error) {
