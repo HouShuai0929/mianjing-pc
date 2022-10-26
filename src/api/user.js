@@ -7,3 +7,7 @@ export const login = (obj) => {
     password: obj.password
   })
 }
+
+export const getUserInfo = () => {
+  return request.get('/auth/currentUser')
+}

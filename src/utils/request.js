@@ -1,6 +1,8 @@
 /* 封装axios用于发送请求 */
 import axios from 'axios'
 import store from '@/store'
+import router from '@/router'
+import { Message } from 'element-ui'
 // 创建一个新的 axios 实例
 const request = axios.create({
   baseURL: 'http://interview-api-t.itheima.net/',
@@ -31,6 +33,15 @@ request.interceptors.response.use(
   },
   function (error) {
     // 对响应错误做点什么
+    if (error.response) {
+      if (error.response.status === 401) {
+        Message.error('当前登录状态已过期,请重新登录!')
+        store.commit('user/logout')
+        router.push('/login')
+      } else {
+        Message.error(error.response.data.message)
+      }
+    }
     return Promise.reject(error)
   }
 )

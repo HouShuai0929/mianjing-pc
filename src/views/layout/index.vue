@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { getUserInfo } from "@/api/user";
 export default {
   name: "LayoutIndex",
   data() {
@@ -54,6 +55,17 @@ export default {
       name: "",
     };
   },
+  async created() {
+    const res = await getUserInfo();
+    this.avatar = res.data.avatar;
+    this.name = res.data.username;
+  },
+  methods: {
+    handleConfirm(){
+      this.$store.commit('user/deleteToken')
+      this.$router.push('/login')
+    }
+  }
 };
 </script>
 

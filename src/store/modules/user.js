@@ -1,4 +1,4 @@
-import { getToken, setToken } from '@/utils/storage'
+import { getToken, removeToken, setToken } from '@/utils/storage'
 export default {
   namespaced: true,
   state: {
@@ -8,6 +8,10 @@ export default {
     setToken(state, newToken) {
       state.token = newToken
       setToken(newToken)
+    },
+    deleteToken(state) {
+      state.token = ''
+      removeToken()
     }
   }
 }

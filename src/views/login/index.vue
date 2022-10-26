@@ -64,9 +64,6 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this.$store);
-  },
   methods: {
     reset() {
       this.$refs.loginRef.resetFields();
@@ -75,7 +72,6 @@ export default {
       this.$refs.loginRef.validate(async (valid) => {
         if (valid) {
           const res = await login(this.loginForm);
-
           this.$message.success("登陆成功");
           this.$store.commit("user/setToken", res.data.token);
           this.$router.push("/");
